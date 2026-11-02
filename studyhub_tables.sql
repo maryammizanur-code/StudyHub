@@ -1,22 +1,19 @@
 
-
---STUDYHUB DATABASE
---Project: Multi-User Personal Study Planner
---Purpose: Create the database and its four tables
-
-
---SECTION 1: CREATE DATABASE
+-- STUDYHUB DATABASE
+-- Project: Multi-User Personal Study Planner
+-- Purpose: Create the database and its three tables
 
 
-CREATE DATABASE studyhub;
+-- SECTION 1: CREATE DATABASE
+
+CREATE DATABASE IF NOT EXISTS studyhub;
 
 USE studyhub;
 
 
 
---SECTION 2: CREATE USERS TABLE
---Stores registered user information
-
+-- SECTION 2: CREATE USERS TABLE
+-- Stores registered user information
 
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -27,9 +24,9 @@ CREATE TABLE users (
 );
 
 
---SECTION 3: CREATE TASKS TABLE
---Stores assignments, exams, and projects
 
+-- SECTION 3: CREATE TASKS TABLE
+-- Stores assignments, exams, and projects
 
 CREATE TABLE tasks (
     task_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -37,8 +34,7 @@ CREATE TABLE tasks (
     title VARCHAR(150) NOT NULL,
     description TEXT,
     task_type ENUM('Assignment', 'Exam', 'Project') NOT NULL,
-    deadline DATETIME NOT NULL,
-    estimated_minutes INT NOT NULL DEFAULT 60,
+    deadline DATE NOT NULL,
     status ENUM('Planned', 'In Progress', 'Completed')
         NOT NULL DEFAULT 'Planned',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -46,42 +42,13 @@ CREATE TABLE tasks (
     CONSTRAINT fk_tasks_user
         FOREIGN KEY (user_id)
         REFERENCES users(user_id)
-        ON DELETE CASCADE,
-
-    CONSTRAINT chk_estimated_minutes
-        CHECK (estimated_minutes > 0)
+        ON DELETE CASCADE
 );
 
 
 
---SECTION 4: CREATE STUDY_SESSIONS TABLE
---Stores completed focus-timer study sessions
-
-CREATE TABLE study_sessions (
-    session_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    subject VARCHAR(100) NOT NULL,
-    duration_minutes INT NOT NULL,
-    started_at DATETIME NOT NULL,
-    completed_at DATETIME NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_sessions_user
-        FOREIGN KEY (user_id)
-        REFERENCES users(user_id)
-        ON DELETE CASCADE,
-
-    CONSTRAINT chk_session_duration
-        CHECK (duration_minutes > 0),
-
-    CONSTRAINT chk_session_times
-        CHECK (completed_at >= started_at)
-);
-
-
-
---SECTION 5: CREATE RESOURCES TABLE
---Stores users' saved study links
+-- SECTION 4: CREATE RESOURCES TABLE
+-- Stores users' saved study links
 
 CREATE TABLE resources (
     resource_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -99,20 +66,19 @@ CREATE TABLE resources (
 
 
 
---SECTION 6: INSERT TEST USERS
---Sample accounts for database testing only
-
+-- SECTION 5: INSERT TEST USERS
+-- Sample accounts for database testing only
+-- Password values are placeholders, not real login credentials.
 
 INSERT INTO users (full_name, email, password_hash)
 VALUES
-    ('Test User One', 'user1@example.com', 'test_001'),
-    ('Test User Two', 'user2@example.com', 'test_002');
+    ('Test User One', 'user1@example.com', 'test_hash_001'),
+    ('Test User Two', 'user2@example.com', 'test_hash_002');
 
 
 
---SECTION 7: INSERT TEST TASKS
---Adds one sample task for each test user
-
+-- SECTION 6: INSERT TEST TASKS
+-- Adds sample tasks for each test user
 
 INSERT INTO tasks (
     user_id,
@@ -120,7 +86,6 @@ INSERT INTO tasks (
     description,
     task_type,
     deadline,
-    estimated_minutes,
     status
 )
 VALUES
@@ -129,53 +94,22 @@ VALUES
     'Complete OODP-II Assignment',
     'Practice object-oriented programming',
     'Assignment',
-    '2026-10-25 23:59:00',
-    120,
+    '2026-11-10',
     'Planned'
 ),
 (
     2,
     'Prepare for Mathematics Exam',
-    'Revise Greens theorem and its related maths',
+    'Revise Greens theorem and related mathematics',
     'Exam',
-    '2026-10-27 09:00:00',
-    180,
+    '2026-11-12',
     'In Progress'
 );
 
 
 
---SECTION 8: INSERT TEST STUDY SESSIONS
---Adds sample focus-timer records
-
-INSERT INTO study_sessions (
-    user_id,
-    subject,
-    duration_minutes,
-    started_at,
-    completed_at
-)
-VALUES
-(
-    1,
-    'Object-Oriented Programming',
-    25,
-    '2026-10-21 20:00:00',
-    '2026-10-21 20:25:00'
-),
-(
-    2,
-    'Mathematics',
-    45,
-    '2026-10-21 21:00:00',
-    '2026-10-21 21:45:00'
-);
-
-
-
---SECTION 9: INSERT TEST RESOURCES
---Adds sample study links
-
+-- SECTION 7: INSERT TEST RESOURCES
+-- Adds sample study links
 
 INSERT INTO resources (
     user_id,
@@ -199,6 +133,6 @@ VALUES
 
 
 
---END OF STUDYHUB SQL SCRIPT
---Tables: users, tasks, study_sessions, resources
+-- END OF STUDYHUB SQL SCRIPT
+-- Tables: users, tasks, resources
 
