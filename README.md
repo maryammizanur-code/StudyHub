@@ -1,2 +1,4 @@
 # StudyHub
-my first java study task management an planner website
+
+Introduction:
+StudyHub is object oriented programming project based on java using core concepts of oop.
