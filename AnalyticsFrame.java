@@ -51,7 +51,7 @@ public class AnalyticsFrame extends JFrame {
         loadAnalytics();
     }
 
-    // Header
+    
     private JPanel createHeader() {
 
         JPanel header = new JPanel(new BorderLayout());
