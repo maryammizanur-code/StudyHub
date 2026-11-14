@@ -32,7 +32,7 @@ public class StudyClient {
                                 StandardCharsets.UTF_8))
             ) {
 
-                // Read the two greeting lines from the server.
+              
                 String greeting1 = input.readLine();
                 String greeting2 = input.readLine();
 
