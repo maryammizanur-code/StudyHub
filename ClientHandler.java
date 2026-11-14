@@ -165,9 +165,7 @@ public class ClientHandler implements Runnable {
             }
 
             case "TASK_DONE": {
-
                 requireParts(parts, 3);
-
                 int userId = parsePositiveInt(parts[1], "user ID");
                 int taskId = parsePositiveInt(parts[2], "task ID");
 
@@ -175,12 +173,10 @@ public class ClientHandler implements Runnable {
                         userId,
                         taskId
                 );
-
                 return updated
                         ? "OK|Task marked as completed."
                         : "NOT_FOUND|Task not found for this user.";
             }
-
             case "TASK_SEARCH": {
 
                 requireParts(parts, 3);
