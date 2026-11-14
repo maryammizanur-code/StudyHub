@@ -58,13 +58,12 @@ public class StudyServer {
             stop();
         }
     }
-
     public void stop() {
 
         try {
             if (serverSocket != null && !serverSocket.isClosed()) {
                 serverSocket.close();
-            }
+           }
         } catch (IOException e) {
             System.err.println(
                     "Error closing server: " + e.getMessage()
