@@ -82,14 +82,12 @@ public boolean loginUser(String email, char[] password)
             || password == null || password.length == 0) {
         return false;
     }
-
     String storedHash =
             userDAO.getPasswordHashByEmail(email.trim());
 
     if (storedHash == null) {
         return false;
     }
-
     return verifyPassword(password, storedHash);
 }
 
