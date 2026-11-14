@@ -10,7 +10,6 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class StudyClient {
-
     private static final String HOST = "127.0.0.1";
     private static final int PORT = 5000;
 
@@ -57,7 +56,6 @@ public class StudyClient {
                                 "Please enter a command.");
                         continue;
                     }
-
                     output.println(request);
 
                     if (output.checkError()) {
@@ -84,7 +82,6 @@ public class StudyClient {
             break;
         }
     }
-
 } else if (upperRequest.startsWith("TASK_SEARCH|")
         && response.equals("TASK_SEARCH_RESULT")) {
 
