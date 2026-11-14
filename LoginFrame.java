@@ -65,7 +65,7 @@ public class LoginFrame extends JFrame {
         form.setBorder(
                 BorderFactory.createCompoundBorder(
                         BorderFactory.createLineBorder(BORDER),
-                        BorderFactory.createEmptyBorder( 20, 20, 20, 20 )));
+                        BorderFactory.createEmptyBorder( 20, 20, 20, 20   )));
 
         GridBagConstraints gbc = new GridBagConstraints();
 
