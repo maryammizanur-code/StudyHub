@@ -366,15 +366,12 @@ public class ResourceFrame extends JFrame {
         }
         updateCount();
     }
-
-    
     private void openResource() {
         int selectedRow = resourceTable.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this,"Please select a resource first.");
             return;
         }
-
         int modelRow =resourceTable.convertRowIndexToModel(selectedRow);
         String url = tableModel.getValueAt(modelRow, 2).toString();
         try {
@@ -396,8 +393,6 @@ public class ResourceFrame extends JFrame {
         }
 
         int modelRow =resourceTable.convertRowIndexToModel(selectedRow);
-
-        // Actual database Resource ID is in hidden column 4
         int resourceId = Integer.parseInt(tableModel.getValueAt(modelRow, 4).toString());
 
         String title = tableModel.getValueAt(modelRow, 1).toString();
@@ -407,34 +402,19 @@ public class ResourceFrame extends JFrame {
                 "Confirm Deletion",
                 JOptionPane.YES_NO_OPTION
         );
-
         if (choice != JOptionPane.YES_OPTION) {
             return;
         }
-
         try {
-
-            boolean deleted = resourceService.deleteResource(
-                    userId,
-                    resourceId
-            );
-            JOptionPane.showMessageDialog(this,deleted
-                            ? "Resource deleted successfully."
-                            : "Resource was not found."
-            );
+            boolean deleted = resourceService.deleteResource(userId,resourceId);
+            JOptionPane.showMessageDialog(this,deleted ? "Resource deleted successfully.": "Resource was not found.");
             loadResources();
         } catch (SQLException e) {
             showDatabaseError(e);
         }
     }
-  
-    private void showDatabaseError(SQLException e) {
+    private void showDatabaseError(SQLException e){
         System.err.println("Resource database error: " + e.getMessage());
-        JOptionPane.showMessageDialog(this,
-                "A database error occurred. Check the database "
-                +"connection and resources table.",
-                "Database Error",
-                JOptionPane.ERROR_MESSAGE
-        );
+        JOptionPane.showMessageDialog(this,"A database error occurred. Check the database "+"connection and resources table.","Database Error",JOptionPane.ERROR_MESSAGE);
     }
 }
