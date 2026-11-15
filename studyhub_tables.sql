@@ -15,12 +15,12 @@ USE studyhub;
 -- SECTION 2: CREATE USERS TABLE
 -- Stores registered user information
 
-CREATE TABLE users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    full_name VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `full_name` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL UNIQUE,
+  `password_hash` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 );
 
 
@@ -28,21 +28,17 @@ CREATE TABLE users (
 -- SECTION 3: CREATE TASKS TABLE
 -- Stores assignments, exams, and projects
 
-CREATE TABLE tasks (
-    task_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    title VARCHAR(150) NOT NULL,
-    description TEXT,
-    task_type ENUM('Assignment', 'Exam', 'Project') NOT NULL,
-    deadline DATE NOT NULL,
-    status ENUM('Planned', 'In Progress', 'Completed')
-        NOT NULL DEFAULT 'Planned',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_tasks_user
-        FOREIGN KEY (user_id)
-        REFERENCES users(user_id)
-        ON DELETE CASCADE
+CREATE TABLE `tasks` (
+  `task_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(150) NOT NULL,
+  `description` text DEFAULT NULL,
+  `task_type` enum('Assignment','Exam','Project') NOT NULL,
+  `deadline` date NOT NULL,
+  `status` enum('Planned','In Progress','Completed') NOT NULL DEFAULT 'Planned',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  CONSTRAINT `fk_tasks_user` FOREIGN KEY (`user_id`)
+    REFERENCES `users` (`user_id`) ON DELETE CASCADE
 );
 
 
@@ -50,18 +46,15 @@ CREATE TABLE tasks (
 -- SECTION 4: CREATE RESOURCES TABLE
 -- Stores users' saved study links
 
-CREATE TABLE resources (
-    resource_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    title VARCHAR(150) NOT NULL,
-    url VARCHAR(2048) NOT NULL,
-    description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_resources_user
-        FOREIGN KEY (user_id)
-        REFERENCES users(user_id)
-        ON DELETE CASCADE
+CREATE TABLE `resources` (
+  `resource_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(150) NOT NULL,
+  `url` varchar(2048) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  CONSTRAINT `fk_resources_user` FOREIGN KEY (`user_id`)
+    REFERENCES `users` (`user_id`) ON DELETE CASCADE
 );
 
 
